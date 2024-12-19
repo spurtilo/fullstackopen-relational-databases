@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Simo Purtilo",
+  "author": "Full stack open",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.7",
