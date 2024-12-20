@@ -20,7 +20,7 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
   res.status(201).json(blog);
 });
 
-blogsRouter.put('/:id', async (req, res) => {
+blogsRouter.put('/:id', middleware.blogFinder, async (req, res) => {
   const { title, author, url, user, likes } = req.body;
   const updatedBlog = await Blog.findByIdAndUpdate(
     req.params.id,
@@ -45,27 +45,27 @@ blogsRouter.put('/:id', async (req, res) => {
   res.json(updatedBlog);
 });
 
-blogsRouter.delete('/:id', middleware.userExtractor, async (req, res) => {
-  // const { user } = req;
-  const blog = await Blog.findByPk(req.params.id);
+blogsRouter.delete(
+  '/:id',
+  middleware.userExtractor,
+  middleware.blogFinder,
+  async (req, res) => {
+    // const { user } = req;
 
-  if (!blog) {
-    res.status(404).json({ error: 'Blog not found' });
-    return;
+    if (!req.blog) {
+      res.status(404).json({ error: 'Blog not found' });
+      return;
+    }
+    // if (user.id !== blog.user.toString()) {
+    //   res.status(401).json({
+    //     error: 'No permission to delete this blog',
+    //   });
+    //   return;
+    // }
+
+    await req.blog.destroy();
+    res.status(204).end();
   }
-  // if (user.id !== blog.user.toString()) {
-  //   res.status(401).json({
-  //     error: 'No permission to delete this blog',
-  //   });
-  //   return;
-  // }
-
-  await Blog.destroy({
-    where: {
-      id: blog.id,
-    },
-  });
-  res.status(204).end();
-});
+);
 
 module.exports = blogsRouter;

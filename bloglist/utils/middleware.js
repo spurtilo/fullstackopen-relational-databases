@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const logger = require('./logger');
 const User = require('../models/user');
+const { Blog } = require('../models');
 
 const requestLogger = (req, res, next) => {
   logger.info('Method:', req.method);
@@ -107,10 +108,16 @@ const errorHandler = (error, req, res, next) => {
   next(error);
 };
 
+const blogFinder = async (req, res, next) => {
+  req.blog = await Blog.findByPk(req.params.id);
+  next();
+};
+
 module.exports = {
   requestLogger,
   tokenExtractor,
   userExtractor,
   errorHandler,
   unknownEndpoint,
+  blogFinder,
 };

@@ -1,5 +1,5 @@
 const { QueryTypes } = require('sequelize');
-const sequelize = require('./db');
+const { sequelize } = require('./db');
 
 const printBlogs = async () => {
   try {
