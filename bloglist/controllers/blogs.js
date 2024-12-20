@@ -46,21 +46,25 @@ blogsRouter.put('/:id', async (req, res) => {
 });
 
 blogsRouter.delete('/:id', middleware.userExtractor, async (req, res) => {
-  const { user } = req;
-  const blog = await Blog.findById(req.params.id);
+  // const { user } = req;
+  const blog = await Blog.findByPk(req.params.id);
 
   if (!blog) {
     res.status(404).json({ error: 'Blog not found' });
     return;
   }
-  if (user.id !== blog.user.toString()) {
-    res.status(401).json({
-      error: 'No permission to delete this blog',
-    });
-    return;
-  }
+  // if (user.id !== blog.user.toString()) {
+  //   res.status(401).json({
+  //     error: 'No permission to delete this blog',
+  //   });
+  //   return;
+  // }
 
-  await Blog.findByIdAndDelete(blog.id);
+  await Blog.destroy({
+    where: {
+      id: blog.id,
+    },
+  });
   res.status(204).end();
 });
 
