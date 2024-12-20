@@ -21,28 +21,21 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
 });
 
 blogsRouter.put('/:id', middleware.blogFinder, async (req, res) => {
-  const { title, author, url, user, likes } = req.body;
-  const updatedBlog = await Blog.findByIdAndUpdate(
-    req.params.id,
-    {
-      title,
-      author,
-      url,
-      user: user.id,
-      likes,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-  await updatedBlog.populate('user', { username: 1, name: 1, id: 1 });
+  // const updateData = { ...req.body };
+  // const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, updateData, {
+  //   new: true,
+  //   runValidators: true,
+  // });
 
-  if (!updatedBlog) {
-    res.status(404).json({ error: 'Blog not found' });
-    return;
+  if (req.blog) {
+    req.blog.likes = req.body.likes;
+    await req.blog.save();
+    res.json(req.blog);
+  } else {
+    res.status(404).json({ error: 'Blog not found' }).end();
   }
-  res.json(updatedBlog);
+
+  // await updatedBlog.populate('user', { username: 1, name: 1, id: 1 });
 });
 
 blogsRouter.delete(

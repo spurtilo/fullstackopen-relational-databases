@@ -1,6 +1,6 @@
-PUT http://localhost:3003/api/blogs/65df3c440251db72bb36557d
+PUT http://localhost:3003/api/blogs/3
 Content-Type: application/json
 
 {
-    "url": "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html"
+    "likes": 1
 }
