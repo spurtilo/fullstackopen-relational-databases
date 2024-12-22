@@ -34,6 +34,11 @@ const userExtractor = async (req, res, next) => {
   next();
 };
 
+const blogFinder = async (req, res, next) => {
+  req.blog = await Blog.findByPk(req.params.id);
+  next();
+};
+
 const unknownEndpoint = (req, res) => {
   res.status(404).send({ error: 'unknown endpoint' });
 };
@@ -41,76 +46,36 @@ const unknownEndpoint = (req, res) => {
 const errorHandler = (error, req, res, next) => {
   logger.error(error.message);
 
-  if (error.name === 'CastError') {
-    if (error.message.includes('Cast to ObjectId failed')) {
+  if (error.name === 'SequelizeValidationError') {
+    if (error.message.includes('blog.title cannot be null')) {
       res.status(400).json({
-        error: 'malformatted id',
+        error: 'Validation error: The title field is required',
       });
       return;
     }
-    if (error.message.includes('Cast to Number failed')) {
+    if (error.message.includes('blog.url cannot be null')) {
       res.status(400).json({
-        error: 'invalid data format or type for value of `likes`',
-      });
-      return;
-    }
-    res.status(400).json({ error: error.message });
-    return;
-  }
-
-  if (error.name === 'ValidationError') {
-    if (error.message.includes('shorter than the minimum')) {
-      res.status(400).json({
-        error: '`username` is shorter than the minimum allowed length (3)',
-      });
-      return;
-    }
-    if (error.message.includes('`username` is required')) {
-      res.status(400).json({
-        error: '`username` is required',
-      });
-      return;
-    }
-    if (error.message.includes('`title` is required')) {
-      res.status(400).json({
-        error: '`title` is required',
-      });
-      return;
-    }
-    if (error.message.includes('`url` is required')) {
-      res.status(400).json({
-        error: '`url` is required',
+        error: 'Validation error: The url field is required',
       });
       return;
     }
     res.status(400).json({ error: error.message });
-    return;
-  }
-
-  if (
-    error.name === 'MongoServerError' &&
-    error.message.includes('E11000 duplicate key error')
-  ) {
-    res.status(400).json({ error: 'expected `username` to be unique' });
     return;
   }
 
   if (error.name === 'JsonWebTokenError') {
-    if (error.message.includes('jwt must be provided')) {
-      res.status(401).json({ error: 'token required' });
+    if (error.message.includes('Jwt must be provided')) {
+      res.status(401).json({ error: 'Token is required' });
     }
     res.status(400).json({
-      error: 'token invalid',
+      error: 'Token is invalid',
     });
     return;
   }
 
-  next(error);
-};
+  res.status(500).json({ error: 'An unexpected error occurred' });
 
-const blogFinder = async (req, res, next) => {
-  req.blog = await Blog.findByPk(req.params.id);
-  next();
+  next(error);
 };
 
 module.exports = {

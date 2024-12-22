@@ -7,15 +7,33 @@ blogsRouter.get('/', async (req, res) => {
   res.json(blogs);
 });
 
-blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
+blogsRouter.post('/', async (req, res) => {
   // const { url, title, author, likes } = req.body;
   // const { user } = req;
-  const blog = await Blog.create(req.body);
+
+  // if (req.body.likes && typeof req.body.likes !== 'number') {
+  //   throw Error('"likes" must be a number');
+  // }
 
   // const savedBlog = await blog.save();
   // await savedBlog.populate('user', { username: 1, name: 1, id: 1 });
   // user.blogs = user.blogs.concat(savedBlog._id);
   // await user.save();
+
+  // if (typeof req.body.author !== 'string') {
+  //   throw Error('Author name must be a string');
+  // }
+
+  const { url, title, author, likes } = req.body;
+
+  const newBlog = {
+    url,
+    title,
+    author,
+    likes,
+  };
+
+  const blog = await Blog.create(newBlog);
 
   res.status(201).json(blog);
 });

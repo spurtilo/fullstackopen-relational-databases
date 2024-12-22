@@ -9,6 +9,9 @@ Blog.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+      validate: {
+        isInt: { msg: 'The id field must be an integer' },
+      },
     },
     author: {
       type: DataTypes.TEXT,
@@ -24,6 +27,9 @@ Blog.init(
     likes: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
+      validate: {
+        isInt: { msg: 'The likes field must be an integer' },
+      },
     },
   },
   {
