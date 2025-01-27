@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5433:5432
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: ${POSTGRES_HOST_AUTH_METHOD}
+      POSTGRES_INITDB_ARGS: ${POSTGRES_INITDB_ARGS}
+    volumes:
+      - bloglist_data:/var/lib/postgresql/data
+    container_name: bloglistdb
+
+volumes:
+  bloglist_data:
