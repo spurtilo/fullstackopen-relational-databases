@@ -1,10 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlcHBvIiwiaWQiOiI2NWRmMDMzOWYxNGZjNGIxOTNhN2U0NWEiLCJpYXQiOjE3MDkxMjg2Mjl9.fxmsyLhaMCn_y6utY_u-WBqbfRgH9IVMI06dFlLM6TA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlcHBvIiwiaWQiOjMsImlhdCI6MTczODA2NTY5Nn0.n8wL9ydlZpgapVsrbcrMxmk2eqgebSGeM3jYG9KxyE8
 
 {
-  "author": "Teppogdfg Testimies",
+  "author": "Teppo Testimies",
   "url": "http://www.example.com/Blog3",
-  "title": "blog4 name",
-  "likes": 1
+  "title": "blog4 name"
 }

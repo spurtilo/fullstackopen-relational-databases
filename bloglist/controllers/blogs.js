@@ -7,44 +7,16 @@ blogsRouter.get('/', async (req, res) => {
   res.json(blogs);
 });
 
-blogsRouter.post('/', async (req, res) => {
-  // const { url, title, author, likes } = req.body;
-  // const { user } = req;
-
-  // if (req.body.likes && typeof req.body.likes !== 'number') {
-  //   throw Error('"likes" must be a number');
-  // }
-
-  // const savedBlog = await blog.save();
-  // await savedBlog.populate('user', { username: 1, name: 1, id: 1 });
-  // user.blogs = user.blogs.concat(savedBlog._id);
-  // await user.save();
-
-  // if (typeof req.body.author !== 'string') {
-  //   throw Error('Author name must be a string');
-  // }
-
-  const { url, title, author, likes } = req.body;
-
-  const newBlog = {
-    url,
-    title,
-    author,
-    likes,
-  };
-
-  const blog = await Blog.create(newBlog);
-
+blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
+  const { user } = req;
+  const blog = await Blog.create({
+    ...req.body,
+    userId: user.id,
+  });
   res.status(201).json(blog);
 });
 
 blogsRouter.put('/:id', middleware.blogFinder, async (req, res) => {
-  // const updateData = { ...req.body };
-  // const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, updateData, {
-  //   new: true,
-  //   runValidators: true,
-  // });
-
   if (req.blog) {
     req.blog.likes = req.body.likes;
     await req.blog.save();
@@ -52,8 +24,6 @@ blogsRouter.put('/:id', middleware.blogFinder, async (req, res) => {
   } else {
     res.status(404).json({ error: 'Blog not found' }).end();
   }
-
-  // await updatedBlog.populate('user', { username: 1, name: 1, id: 1 });
 });
 
 blogsRouter.delete(
