@@ -20,20 +20,16 @@ usersRouter.post('/', async (req, res) => {
     return;
   }
 
-  try {
-    const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(password, saltRounds);
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
 
-    const user = User.build({
-      ...req.body,
-      passwordHash,
-    });
+  const user = User.build({
+    ...req.body,
+    passwordHash,
+  });
 
-    await user.save();
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(400).json({ error });
-  }
+  await user.save();
+  res.status(201).json(user);
 });
 
 usersRouter.put('/:username', async (req, res) => {

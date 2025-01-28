@@ -59,6 +59,12 @@ const errorHandler = (error, req, res, next) => {
       });
       return;
     }
+    if (error.message.includes('Validation isEmail on username failed')) {
+      res.status(400).json({
+        error: 'Validation error: The username must be a valid email address',
+      });
+      return;
+    }
     res.status(400).json({ error: error.message });
     return;
   }
