@@ -28,23 +28,24 @@ blogsRouter.put('/:id', middleware.blogFinder, async (req, res) => {
 
 blogsRouter.delete(
   '/:id',
-  middleware.userExtractor,
   middleware.blogFinder,
+  middleware.userExtractor,
   async (req, res) => {
-    // const { user } = req;
+    const { user, blog } = req;
 
-    if (!req.blog) {
+    if (!blog) {
       res.status(404).json({ error: 'Blog not found' });
       return;
     }
-    // if (user.id !== blog.user.toString()) {
-    //   res.status(401).json({
-    //     error: 'No permission to delete this blog',
-    //   });
-    //   return;
-    // }
 
-    await req.blog.destroy();
+    if (user.id !== blog.userId) {
+      res.status(401).json({
+        error: 'No permission to delete this blog',
+      });
+      return;
+    }
+
+    await blog.destroy();
     res.status(204).end();
   }
 );
