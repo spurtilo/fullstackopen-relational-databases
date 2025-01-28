@@ -1,9 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlcHBvIiwiaWQiOjMsImlhdCI6MTczODA2NTY5Nn0.n8wL9ydlZpgapVsrbcrMxmk2eqgebSGeM3jYG9KxyE8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNwdXJ0aWxvIiwiaWQiOjEsImlhdCI6MTczODA2NjU4MX0.-iorsro7gC_vBRnCRh4QbAOLGo2EMQVWaRQxbVpLbRQ
 
 {
-  "author": "Teppo Testimies",
-  "url": "http://www.example.com/Blog3",
+  "author": "Seppo Testimies",
+  "url": "http://www.example.com/Blog4",
   "title": "blog4 name"
 }

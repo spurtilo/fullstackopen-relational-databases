@@ -1,9 +1,15 @@
 const blogsRouter = require('express').Router();
 const middleware = require('../utils/middleware');
-const Blog = require('../models/blog');
+const { User, Blog } = require('../models');
 
 blogsRouter.get('/', async (req, res) => {
-  const blogs = await Blog.findAll();
+  const blogs = await Blog.findAll({
+    attributes: { exclude: ['userId'] },
+    include: {
+      model: User,
+      attributes: ['name'],
+    },
+  });
   res.json(blogs);
 });
 
