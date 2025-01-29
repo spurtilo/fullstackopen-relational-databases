@@ -30,6 +30,7 @@ blogsRouter.get('/', async (req, res) => {
       attributes: ['username', 'name'],
     },
     where,
+    order: [['likes', 'DESC']],
   });
   res.json(blogs);
 });
