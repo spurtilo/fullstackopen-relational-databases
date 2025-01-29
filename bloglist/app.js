@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const loginRouter = require('./controllers/login');
 const blogsRouter = require('./controllers/blogs');
+const authorsRouter = require('./controllers/authors');
 const usersRouter = require('./controllers/users');
 const middleware = require('./utils/middleware');
 
@@ -16,6 +17,7 @@ app.use(middleware.tokenExtractor);
 
 app.use('/api/login', loginRouter);
 app.use('/api/blogs', blogsRouter);
+app.use('/api/authors', authorsRouter);
 app.use('/api/users', usersRouter);
 
 if (process.env.NODE_ENV === 'test') {
