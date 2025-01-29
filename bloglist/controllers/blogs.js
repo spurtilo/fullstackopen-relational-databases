@@ -7,7 +7,7 @@ blogsRouter.get('/', async (req, res) => {
     attributes: { exclude: ['userId'] },
     include: {
       model: User,
-      attributes: ['name'],
+      attributes: ['username', 'name'],
     },
   });
   res.json(blogs);
@@ -15,11 +15,19 @@ blogsRouter.get('/', async (req, res) => {
 
 blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
   const { user } = req;
-  const blog = await Blog.create({
+  const newBlog = await Blog.create({
     ...req.body,
     userId: user.id,
   });
-  res.status(201).json(blog);
+
+  const blogWithUser = await Blog.findByPk(newBlog.id, {
+    include: {
+      model: User,
+      attributes: ['username', 'name'],
+    },
+  });
+
+  res.status(201).json(blogWithUser);
 });
 
 blogsRouter.put('/:id', middleware.blogFinder, async (req, res) => {
