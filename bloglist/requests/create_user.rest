@@ -1,14 +1,14 @@
 POST http://localhost:3003/api/users
 Content-type: application/json
 
-{
-    "username": "spurtilo",
-    "name": "Simo Purtilo",
-    "password": "salainensana"
-}
-
 # {
-#     "username": "teppo",
-#     "name": "Teppo Testinen",
-#     "password": "dsadgdfgfd"
+#     "username": "simo@fakemail.com",
+#     "name": "Simo Purtilo",
+#     "password": "secret"
 # }
+
+{
+    "username": "seppo@jokumaili.fi",
+    "name": "Seppo Sepponen",
+    "password": "secret"
+}

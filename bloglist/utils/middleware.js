@@ -48,19 +48,29 @@ const errorHandler = (error, req, res, next) => {
   if (error.name === 'SequelizeValidationError') {
     if (error.message.includes('blog.title cannot be null')) {
       res.status(400).json({
-        error: 'Validation error: The title field is required',
+        error: 'Validation error: Title field is required',
       });
       return;
     }
     if (error.message.includes('blog.url cannot be null')) {
       res.status(400).json({
-        error: 'Validation error: The url field is required',
+        error: 'Validation error: Url field is required',
       });
       return;
     }
     if (error.message.includes('Validation isEmail on username failed')) {
       res.status(400).json({
-        error: 'Validation error: The username must be a valid email address',
+        error: 'Validation error: Username must be a valid email address',
+      });
+      return;
+    }
+    if (
+      error.message.includes('Validation min on year failed') ||
+      error.message.includes('Validation max on year failed')
+    ) {
+      const currentYear = new Date().getFullYear();
+      res.status(400).json({
+        error: `Validation error: Year must be between 1991 and ${currentYear}`,
       });
       return;
     }

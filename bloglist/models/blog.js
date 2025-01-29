@@ -24,6 +24,13 @@ Blog.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    year: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 1991,
+        max: new Date().getFullYear(),
+      },
+    },
     likes: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
