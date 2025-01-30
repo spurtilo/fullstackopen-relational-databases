@@ -49,7 +49,7 @@ router.get('/:id', async (req, res) => {
       },
       {
         model: Note,
-        as: 'marked_notes',
+        as: 'markedNotes',
         attributes: { exclude: ['userId'] },
         through: {
           attributes: [],
