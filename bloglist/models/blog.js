@@ -10,7 +10,7 @@ Blog.init(
       primaryKey: true,
       autoIncrement: true,
       validate: {
-        isInt: { msg: 'The id field must be an integer' },
+        isInt: { msg: 'The blog id field must be an integer' },
       },
     },
     author: {

@@ -20,6 +20,9 @@ ReadingList.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'blogs', key: 'id' },
+      validate: {
+        isInt: { msg: 'Blog id must be an integer' },
+      },
     },
     isRead: {
       type: DataTypes.BOOLEAN,

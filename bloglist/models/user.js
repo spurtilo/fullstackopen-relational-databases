@@ -10,6 +10,9 @@ User.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+      validate: {
+        isInt: { msg: 'The user id field must be an integer' },
+      },
     },
     username: {
       type: DataTypes.STRING,

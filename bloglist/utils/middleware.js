@@ -58,12 +58,6 @@ const errorHandler = (error, req, res, next) => {
       });
       return;
     }
-    if (error.message.includes('Validation isEmail on username failed')) {
-      res.status(400).json({
-        error: 'Validation error: Username must be a valid email address',
-      });
-      return;
-    }
     if (
       error.message.includes('Validation min on year failed') ||
       error.message.includes('Validation max on year failed')
@@ -71,6 +65,26 @@ const errorHandler = (error, req, res, next) => {
       const currentYear = new Date().getFullYear();
       res.status(400).json({
         error: `Validation error: Year must be between 1991 and ${currentYear}`,
+      });
+      return;
+    }
+
+    if (error.message.includes('Validation isEmail on username failed')) {
+      res.status(400).json({
+        error: 'Validation error: Username must be a valid email address',
+      });
+      return;
+    }
+
+    if (error.message.includes('reading_list.userId cannot be null')) {
+      res.status(400).json({
+        error: 'Validation error: User id is required',
+      });
+      return;
+    }
+    if (error.message.includes('reading_list.blogId cannot be null')) {
+      res.status(400).json({
+        error: 'Validation error: Blog id is required',
       });
       return;
     }
