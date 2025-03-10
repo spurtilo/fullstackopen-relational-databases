@@ -88,6 +88,12 @@ const errorHandler = (error, req, res, next) => {
       });
       return;
     }
+    if (error.message.includes('blog.year cannot be null')) {
+      res.status(400).json({
+        error: 'Validation error: Blog year is required',
+      });
+      return;
+    }
     res.status(400).json({ error: error.message });
     return;
   }
