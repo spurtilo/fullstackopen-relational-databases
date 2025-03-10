@@ -6,7 +6,7 @@ const loginRouter = require('./controllers/login');
 const blogsRouter = require('./controllers/blogs');
 const authorsRouter = require('./controllers/authors');
 const usersRouter = require('./controllers/users');
-const readingRouter = require('./controllers/reading_lists');
+const readingRouter = require('./controllers/readingLists');
 const middleware = require('./utils/middleware');
 
 const app = express();
