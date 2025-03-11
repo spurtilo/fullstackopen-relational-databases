@@ -5,8 +5,11 @@ const { ReadingList } = require('../models');
 readingRouter.post('/', middleware.userExtractor, async (req, res) => {
   const newListEntry = req.body;
 
-  if (newListEntry.userId === req.user.id) {
-    await ReadingList.create(newListEntry);
+  if (newListEntry.user_id === req.user.id) {
+    await ReadingList.create({
+      userId: newListEntry.user_id,
+      blogId: newListEntry.blog_id,
+    });
 
     res.status(201).json(newListEntry);
   } else {
