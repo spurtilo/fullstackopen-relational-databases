@@ -20,12 +20,12 @@ readingRouter.put('/:id', middleware.userExtractor, async (req, res) => {
   const readingListEntry = await ReadingList.findByPk(req.params.id);
 
   if (readingListEntry && readingListEntry.userId === req.user.id) {
-    if (readingListEntry.isRead) {
+    if (readingListEntry.read) {
       res.status(400).json({ error: 'This blog is already marked as read' });
       return;
     }
 
-    readingListEntry.isRead = true;
+    readingListEntry.read = true;
     await readingListEntry.save();
 
     res.status(200).json(readingListEntry);

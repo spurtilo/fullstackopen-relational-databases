@@ -24,7 +24,7 @@ ReadingList.init(
         isInt: { msg: 'Blog id must be an integer' },
       },
     },
-    isRead: {
+    read: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
