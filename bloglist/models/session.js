@@ -14,7 +14,7 @@ Session.init(
         isInt: { msg: 'The id field must be an integer' },
       },
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'users', key: 'id' },
@@ -28,10 +28,10 @@ Session.init(
       allowNull: false,
       defaultValue: true,
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
     },
   },

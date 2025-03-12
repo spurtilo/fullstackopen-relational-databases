@@ -19,6 +19,7 @@ loginRouter.post('/', async (req, res) => {
     res.status(401).json({
       error: 'Invalid username or password',
     });
+    return;
   }
 
   if (user.disabled) {
@@ -35,7 +36,9 @@ loginRouter.post('/', async (req, res) => {
 
   const token = jwt.sign(userForToken, process.env.SECRET);
 
-  await Session.res.status(200).send({
+  await Session.create({ userId: user.id, token });
+
+  res.status(200).send({
     token,
     username: user.username,
     name: user.name,
