@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const logger = require('./logger');
-const { User, Blog } = require('../models');
+const { User, Blog, Session } = require('../models');
 
 const requestLogger = (req, res, next) => {
   logger.info('Method:', req.method);
@@ -10,12 +10,23 @@ const requestLogger = (req, res, next) => {
   next();
 };
 
-const tokenExtractor = (req, res, next) => {
+const tokenExtractor = async (req, res, next) => {
   const authorization = req.get('Authorization');
   req.token = null;
 
   if (authorization && authorization.startsWith('Bearer ')) {
-    req.token = authorization.replace('Bearer ', '');
+    const token = authorization.replace('Bearer ', '');
+
+    const session = await Session.findOne({ where: { token } });
+
+    if (session) {
+      req.token = token;
+    } else {
+      res.status(401).json({
+        error: 'Session expired, please log in again',
+      });
+      return;
+    }
   }
   next();
 };

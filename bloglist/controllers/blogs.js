@@ -52,15 +52,20 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
   res.status(201).json(blogWithUser);
 });
 
-blogsRouter.put('/:id', middleware.blogFinder, async (req, res) => {
-  if (req.blog) {
-    req.blog.likes = req.body.likes;
-    await req.blog.save();
-    res.json(req.blog);
-  } else {
-    res.status(404).json({ error: 'Blog not found' }).end();
+blogsRouter.put(
+  '/:id',
+  middleware.blogFinder,
+  middleware.userExtractor,
+  async (req, res) => {
+    if (req.blog) {
+      req.blog.likes = req.body.likes;
+      await req.blog.save();
+      res.json(req.blog);
+    } else {
+      res.status(404).json({ error: 'Blog not found' }).end();
+    }
   }
-});
+);
 
 blogsRouter.delete(
   '/:id',
